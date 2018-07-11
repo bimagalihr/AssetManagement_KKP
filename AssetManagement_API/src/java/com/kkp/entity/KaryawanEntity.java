@@ -10,6 +10,7 @@ package com.kkp.entity;
  * @author bimagalihr
  */
 public class KaryawanEntity {
+    private int id;
     private String namaLengkap;
     private String nomorHp;
     private String email;
@@ -18,6 +19,14 @@ public class KaryawanEntity {
     private String alamatKtp;
     private String createDate;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getCreateDate() {
         return createDate;
     }

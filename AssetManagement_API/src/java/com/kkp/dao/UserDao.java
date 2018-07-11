@@ -270,4 +270,40 @@ public class UserDao {
         }
         return status;
     }
+    
+    public Collection getViewUser(int id) {
+        DbConnection dbConnection = new DbConnection();
+        Connection conn = null;
+        List listMaster = new ArrayList<Object>();
+        try {
+            conn = dbConnection.getDatabaseConnection();
+            String sql = " SELECT * FROM MST_USER WHERE id = "+id;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                UserEntity entity = new UserEntity();
+                entity.setId(rs.getInt("id"));
+                entity.setFullName(rs.getString("fullName"));
+                entity.setEmail(rs.getString("email"));
+                entity.setCreateDate(rs.getString("createDate"));
+                listMaster.add(entity);
+            }
+        } catch (Exception e) {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            conn = null;
+        }
+        return listMaster;
+    }
+    
 }

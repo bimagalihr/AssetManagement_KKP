@@ -83,5 +83,38 @@ public class TokenDao {
         }
         return result;
     }
+    
+    public int getTokenIdle(String token) throws Exception {
+        DbConnection dbConnection = new DbConnection();
+        Connection conn = null;
+        int result = 0;
+        try {
+            conn = dbConnection.getDatabaseConnection();
+            String sql1 = " SELECT Token FROM MST_TOKEN WHERE Token = '"+token+"' ";
+            System.out.println("sql : "+sql1);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql1);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                result = 1;
+            }else{
+                result = 0;
+            }
+        } catch (Exception e) {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            conn = null;
+        }
+        return result;
+    }
 }
 
