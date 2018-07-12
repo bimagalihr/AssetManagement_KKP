@@ -63,6 +63,12 @@ public class WebService extends HttpServlet {
                     case "list-all-data-karyawan":
                         doListAllDataKaryawan(request, response);
                         break; 
+                    case "data-edit-asset":
+                        doDataEditAsset(request, response);
+                        break; 
+                    case "view-data-asset":
+                        doViewAsset(request, response);
+                        break; 
                     default:
                         System.out.println("Parameter Url Salah");
                 }
@@ -116,6 +122,9 @@ public class WebService extends HttpServlet {
                         break;
                     case "asset-delete":
                         doDeleteAsset(request, response);
+                        break;
+                    case "asset-edit":
+                        doEditAsset(request, response);
                         break;
                     default:
                         System.out.println("Parameter Url Salah");
@@ -899,6 +908,142 @@ public class WebService extends HttpServlet {
             }else{
                 jr.OutStatusAndDesc(request, response, 0, "Invalid Token !");
             }                       
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void doDataEditAsset(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Masuk doDataEditAsset");
+        
+        Collection getData;
+        AssetDao dao        = new AssetDao();
+        Util util           = new Util();
+        JsonReturn jr       = new JsonReturn();
+        TokenDao tokenDao   = new TokenDao();
+        int status          = 0;
+        String desc         = "";
+                
+        try{
+            
+            String id           = request.getParameter("id");            
+            String token        = (String) request.getSession().getAttribute("tokenSession");
+            int tokenAvailable  = tokenDao.getTokenIdle(token);
+            
+            if(tokenAvailable == 1){
+                if(!util.isNullOrEmpty(id)){
+                    getData = dao.getDataEdit(id);
+                    status  = 1;
+                    desc    = "Sukses";
+                }else{
+                    getData = null;
+                    status  = 0;
+                    desc    = "Data tidak ditemukan atau terjadi kesalahan";
+                }
+                
+                jr.OutObject(request, response, status, desc, getData);   
+                
+            }else{
+                
+                jr.HashmapWithMessage(request, response, 0, "Invalid Token !");
+                
+            }            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void doEditAsset(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Masuk doEditAsset");
+        
+        AssetDao dao                = new AssetDao();
+        JsonReturn jr               = new JsonReturn();
+        SimpleDateFormat sdfFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdfFormat.setTimeZone(java.util.TimeZone.getTimeZone("Asia/Bangkok"));
+        int status                  = 0; 
+        String desc                 = "";
+        TokenDao tokenDao           = new TokenDao();
+        SimpleDateFormat sdfFormat2 = new SimpleDateFormat("yyyyMMdd");
+        sdfFormat2.setTimeZone(java.util.TimeZone.getTimeZone("Asia/Bangkok"));
+        int currentDate             = Integer.valueOf(sdfFormat2.format(new Date()));
+        Util util                   = new Util();
+        
+        try{
+            
+            String id               = request.getParameter("id");
+            String pilihKaryawan    = request.getParameter("pilihKaryawan");
+            String namaBarang       = request.getParameter("namaBarang");
+            String merek            = request.getParameter("merek");
+            String tipe             = request.getParameter("tipe");
+            String noSeri           = request.getParameter("noSeri");
+            String jumlah           = request.getParameter("jumlah");
+            int tglKadaluarsa       = Integer.valueOf(request.getParameter("tglKadaluarsa"));
+            String dateTime         = sdfFormat.format(new Date());    
+            String token            = (String) request.getSession().getAttribute("tokenSession");
+            int tokenAvailable      = tokenDao.getTokenIdle(token);
+            
+            if(tokenAvailable == 1){
+                if(!util.isNullOrEmpty(id)){
+                    if(tglKadaluarsa > currentDate){                        
+                        int updateData = dao.updateBarang(pilihKaryawan, namaBarang, merek, tipe, noSeri, jumlah, String.valueOf(tglKadaluarsa), dateTime, id);
+                        if(updateData == 1){
+                            status  = 1;
+                            desc    = "Sukses menambahkan data karyawan";
+                        }else{
+                            status  = 0;
+                            desc    = "Gagal menambahkan data karyawan";
+                        }
+                        
+                        jr.OutStatusAndDesc(request, response, status, desc);
+                        
+                    }else{
+                        jr.HashmapWithMessage(request, response, -1, "Tanggal kadaluarsa harus melebih tanggal sekarang");
+                    }
+                    
+                }else{
+                    jr.HashmapWithMessage(request, response, 0, "Kesalahan Data");  
+                }                
+            }else{                
+                jr.HashmapWithMessage(request, response, 0, "Invalid Token !");                
+            }                 
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void doViewAsset(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Masuk doViewAsset");
+        
+        AssetDao dao            = new AssetDao();
+        JsonReturn jr           = new JsonReturn();
+        TokenDao tokenDao       = new TokenDao();
+        String desc             = "";
+        int status              = 0;
+        Collection getData;
+        
+        try{
+            
+            String token        = (String) request.getSession().getAttribute("tokenSession");
+            int tokenAvailable  = tokenDao.getTokenIdle(token);
+            
+            if(tokenAvailable == 1){        
+                String id = request.getParameter("id");
+                getData = dao.getDataViewAsset(id);
+
+                if(getData != null){
+                    status = 1;
+                    desc = "Sukses ambil data";
+                }else{
+                    status = 0;
+                    desc = "Gagal ambil data";
+                }         
+
+                jr.OutObject(request, response, status, desc, getData); 
+                
+            }else{
+                jr.OutStatusAndDesc(request, response, 0, "Invalid Token !");
+            }
+            
         }catch(Exception e){
             e.printStackTrace();
         }

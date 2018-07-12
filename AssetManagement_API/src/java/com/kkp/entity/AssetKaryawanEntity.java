@@ -11,6 +11,7 @@ package com.kkp.entity;
  */
 public class AssetKaryawanEntity {
     private int id;
+    private String id_tbl_karyawan;
     private String namaLengkap;
     private String idKaryawan;
     private String nomorHp;
@@ -29,6 +30,14 @@ public class AssetKaryawanEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getId_tbl_karyawan() {
+        return id_tbl_karyawan;
+    }
+
+    public void setId_tbl_karyawan(String id_tbl_karyawan) {
+        this.id_tbl_karyawan = id_tbl_karyawan;
     }
     
     public String getNamaLengkap() {

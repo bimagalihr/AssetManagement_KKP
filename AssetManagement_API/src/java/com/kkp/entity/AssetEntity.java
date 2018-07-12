@@ -10,7 +10,7 @@ package com.kkp.entity;
  * @author bimagalihr
  */
 public class AssetEntity {
-    private String id;
+    private int id;
     private String id_tbl_karyawan;
     private String namaBarang;
     private String merek;
@@ -20,13 +20,13 @@ public class AssetEntity {
     private String createDate;
     private String tglKadaluarsa;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
-    }
+    }    
 
     public String getId_tbl_karyawan() {
         return id_tbl_karyawan;

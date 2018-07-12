@@ -5,6 +5,7 @@
  */
 package com.kkp.dao;
 
+import com.kkp.entity.AssetEntity;
 import com.kkp.entity.AssetKaryawanEntity;
 import com.kkp.shared.DbConnection;
 import com.kkp.shared.Util;
@@ -284,40 +285,132 @@ public class AssetDao {
         return status;
     }
     
-//    public int updateKaryawanAsset(int id) throws Exception {
-//        DbConnection dbConnection = new DbConnection();
-//        Connection conn = null;
-//        int status = 0;
-//        
-//        try {
-//            
-//            conn = dbConnection.getDatabaseConnection();
-//            String sql = " UPDATE MST_ASSET SET id_tbl_karyawan = 0 WHERE id_tbl_karyawan = ? ";
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setInt(1, id);
-//            if (ps.executeUpdate() > 0) {
-//                status = 1;
-//                System.out.println("Sukses update data");
-//            } else {
-//                System.out.println("Gagal update data");
-//                status = 0;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            try {
-//                conn.close();
-//            } catch (SQLException ex) {
-//                ex.getSQLState();
-//            }            
-//        } finally {
-//            try {
-//                conn.close();
-//            } catch (SQLException ex) {
-//                ex.getSQLState();
-//            }
-//            conn = null;
-//        }
-//        return status;
-//    }
+    public Collection getDataEdit(String id) {
+        DbConnection dbConnection = new DbConnection();
+        Connection conn = null;
+        List listMaster = new ArrayList<Object>();
+        try {
+            conn = dbConnection.getDatabaseConnection();
+            String sql = " SELECT * FROM MST_ASSET WHERE id = "+id;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AssetEntity entity = new AssetEntity();
+                entity.setId(rs.getInt("id"));
+                entity.setId_tbl_karyawan(rs.getString("id_tbl_karyawan"));
+                entity.setNamaBarang(rs.getString("namaBarang"));
+                entity.setMerek(rs.getString("merek"));
+                entity.setTipe(rs.getString("tipe"));
+                entity.setNoSeri(rs.getString("noSeri"));
+                entity.setJumlah(rs.getString("jumlah"));
+                entity.setTglKadaluarsa(rs.getString("tglKadaluarsa"));
+                listMaster.add(entity);
+            }
+        } catch (Exception e) {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            conn = null;
+        }
+        return listMaster;
+    }
+    
+    public int updateBarang(String pilihKaryawan, String namaBarang, String merek, String tipe, String noSeri, String jumlah, String tglKadaluarsa, String createDate, String id) throws Exception {
+        DbConnection dbConnection = new DbConnection();
+        Connection conn = null;
+        int status = 0;
+        try {
+            SimpleDateFormat beforeDate = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat updateDate = new SimpleDateFormat("yyyy-MM-dd");
+            String reformatTglKadaluarsa = updateDate.format(beforeDate.parse(tglKadaluarsa));
+            
+            conn = dbConnection.getDatabaseConnection();
+            String sql = " UPDATE MST_ASSET SET id_tbl_karyawan = ?, namaBarang = ?, merek = ?, tipe = ?, noSeri = ?, jumlah = ?, tglKadaluarsa = ?, createDate = ? WHERE id = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, pilihKaryawan);
+            ps.setString(2, namaBarang);
+            ps.setString(3, merek);
+            ps.setString(4, tipe);
+            ps.setString(5, noSeri);
+            ps.setString(6, jumlah);
+            ps.setString(7, reformatTglKadaluarsa);
+            ps.setString(8, createDate);
+            ps.setString(9, id);
+            if (ps.executeUpdate() > 0) {
+                status = 1;
+                System.out.println("Sukses update data barang");
+            } else {
+                System.out.println("Gagal update data barang");
+                status = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }            
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            conn = null;
+        }
+        return status;
+    }
+    
+    public Collection getDataViewAsset(String id) {
+        DbConnection dbConnection = new DbConnection();
+        Connection conn = null;
+        List listMaster = new ArrayList<Object>();
+        try {
+            conn = dbConnection.getDatabaseConnection();
+            String sql = " SELECT ma.id, ma.id_tbl_karyawan, namaLengkap, mk.idKaryawan, mk.nomorHp, mk.email, ma.namaBarang, ma.merek, ma.tipe, ma.noSeri, ma.jumlah, ma.createDate, ma.tglKadaluarsa FROM MST_ASSET ma LEFT JOIN MST_KARYAWAN mk ON ma.id_tbl_karyawan = mk.id WHERE ma.id = "+id;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AssetKaryawanEntity entity = new AssetKaryawanEntity();
+                entity.setId(rs.getInt("id"));
+                entity.setId_tbl_karyawan(rs.getString("id_tbl_karyawan"));
+                entity.setIdKaryawan(rs.getString("idKaryawan"));
+                entity.setNomorHp(rs.getString("nomorHp"));
+                entity.setEmail(rs.getString("email"));
+                entity.setNamaBarang(rs.getString("namaBarang"));
+                entity.setMerek(rs.getString("merek"));
+                entity.setTipe(rs.getString("tipe"));
+                entity.setNoSeri(rs.getString("noSeri"));
+                entity.setJumlah(rs.getString("jumlah"));
+                entity.setCreateDate(rs.getString("createDate"));
+                entity.setTglKadaluarsa(rs.getString("tglKadaluarsa"));
+                listMaster.add(entity);
+            }
+        } catch (Exception e) {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getSQLState();
+            }
+            conn = null;
+        }
+        return listMaster;
+    }
 
 }
