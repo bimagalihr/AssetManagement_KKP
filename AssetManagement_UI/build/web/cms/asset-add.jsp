@@ -84,7 +84,7 @@
                                                         <b>Jumlah</b>
                                                     </td>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:400px;" colspan="">
-                                                        <input style="width:100px;" class="form-control" type="number" style="" id="jumlah" name="jumlah" >
+                                                        <input style="width:100px;margin-right:173.5px;" class="form-control" type="number" style="" id="jumlah" name="jumlah" >
                                                     </td>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
@@ -231,6 +231,9 @@
                                         $("#ModalMessageTitle").html(kvlAppVer);
                                         $("#ModalMessageContent").html("<p>Tanggal kadaluarsa harus melebihi tanggal sekarang </p>");
                                         $("#ModalMessage").modal('show');
+                                        $("#ModalMessage").click(function(){
+                                            location.href = "Asset?url=add-asset";
+                                        });
                                         break;
                                     default:
                                         $("#ModalMessageConfirm").modal('hide');

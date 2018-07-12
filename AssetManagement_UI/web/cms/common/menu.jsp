@@ -72,7 +72,7 @@
                         </li> 
                         <li class="nav-parent" id="agentProfile">
                             <a>
-                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <i class="fa fa-cubes" aria-hidden="true"></i>
                                 <span>ASSET</span>
                             </a>
                             <ul class="nav nav-children">

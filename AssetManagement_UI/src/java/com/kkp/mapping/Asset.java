@@ -32,6 +32,12 @@ public class Asset extends HttpServlet {
                         case "add-asset":
                             doAddAsset(request, response);
                             break;
+                        case "edit-asset":
+                            doEditAsset(request, response);
+                            break;
+                        case "view-asset":
+                            doViewAsset(request, response);
+                            break;
                         default:
                             System.out.println("Parameter Url Salah");
                     }
@@ -54,6 +60,22 @@ public class Asset extends HttpServlet {
     private void doAddAsset(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher("./asset-add.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doEditAsset(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("./asset-edit.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doViewAsset(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("./asset-view.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

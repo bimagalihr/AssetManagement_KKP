@@ -123,12 +123,12 @@
     
     function ButtonEdit(index){
         getId =  $('#UserOverview').datagrid("getRows")[index]["id"];   
-        window.location.href= "Karyawan?url=edit-karyawan&id="+getId;
+        window.location.href= "Asset?url=edit-asset&id="+getId;
     }
     
     function ButtonView(index){
         getId =  $('#UserOverview').datagrid("getRows")[index]["id"];   
-        window.location.href= "Karyawan?url=view-karyawan&id="+getId;
+        window.location.href= "Asset?url=view-asset&id="+getId;
     }
 
     function ButtonDelete(index){
