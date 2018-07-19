@@ -5,6 +5,7 @@
  */
 package com.kkp.dao;
 
+import com.kkp.encryption.CaesarCipher;
 import com.kkp.entity.UserEntity;
 import com.kkp.shared.DbConnection;
 import com.kkp.shared.Util;
@@ -21,6 +22,8 @@ import java.util.List;
  * @author bimagalihr
  */
 public class UserDao {
+    
+    CaesarCipher cp = new CaesarCipher();    
         
     public int getTotalUser(String fullname, String email, String createDate) {
         DbConnection dbConnection = new DbConnection();
@@ -34,14 +37,14 @@ public class UserDao {
 
             if (!util.isNullOrEmpty(fullname)) {
                 fullname = fullname.trim();
-                FilterData = FilterData + " AND fullname LIKE '%" + fullname + "%'";
+                FilterData = FilterData + " AND fullname LIKE '%" + cp.encrypt(fullname) + "%'";
             }
             if (!util.isNullOrEmpty(email)) {
                 email = email.trim();
-                FilterData = FilterData + " AND email LIKE '%" + email + "%'";
+                FilterData = FilterData + " AND email LIKE '%" + cp.encrypt(email) + "%'";
             }
             if (!util.isNullOrEmpty(createDate)) {
-                FilterData = FilterData + " AND createDate LIKE '%" + createDate + "%'";
+                FilterData = FilterData + " AND createDate LIKE '%" + cp.encrypt(createDate) + "%'";
             }
 
             String sql = " SELECT COUNT(0) AS Total FROM (SELECT ROW_NUMBER() OVER(ORDER by id)as rowNum, fullname, email, createDate FROM MST_USER WHERE 1 = 1" + FilterData + " and fullName <>'-' or email <>'-') as Data";
@@ -89,15 +92,15 @@ public class UserDao {
             }
             if (!util.isNullOrEmpty(fullName)) {
                 fullName = fullName.trim();
-                FilterData = FilterData + " AND fullName  LIKE '%" + fullName + "%'";
+                FilterData = FilterData + " AND fullName  LIKE '%" + cp.encrypt(fullName) + "%'";
             }
             if (!util.isNullOrEmpty(email)) {
                 email = email.trim();
-                FilterData = FilterData + " AND email LIKE '%" + email + "%'";
+                FilterData = FilterData + " AND email LIKE '%" + cp.encrypt(email) + "%'";
             }
             if (!util.isNullOrEmpty(createDate)) {
                 createDate = createDate.trim();
-                FilterData = FilterData + " AND createDate LIKE '%" + createDate + "%'";
+                FilterData = FilterData + " AND createDate LIKE '%" + cp.encrypt(createDate) + "%'";
             }
 
             String sql = " SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER by id)as rowNum, id, fullName, email, createDate "
@@ -108,9 +111,9 @@ public class UserDao {
             while (rs.next()) {
                 UserEntity entity = new UserEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setFullName(rs.getString("fullName"));
-                entity.setEmail(rs.getString("email"));
-                entity.setCreateDate(rs.getString("createDate"));
+                entity.setFullName(cp.decrypt(rs.getString("fullName")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
+                entity.setCreateDate(cp.decrypt(rs.getString("createDate")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {
@@ -175,9 +178,8 @@ public class UserDao {
             while (rs.next()) {
                 UserEntity entity = new UserEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setFullName(rs.getString("fullName"));
-                entity.setEmail(rs.getString("email"));
-                System.out.println("test nama : "+entity.getFullName());;
+                entity.setFullName(cp.decrypt(rs.getString("fullName")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {
@@ -206,10 +208,10 @@ public class UserDao {
             conn = dbConnection.getDatabaseConnection();
             String sql = " UPDATE MST_USER SET email = ?, password = ?, fullname = ?, createDate = ? WHERE id = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, email);
+            ps.setString(1, cp.encrypt(email));
             ps.setString(2, password);
-            ps.setString(3, fullname);
-            ps.setString(4, createDate);
+            ps.setString(3, cp.encrypt(fullname));
+            ps.setString(4, cp.encrypt(createDate));
             ps.setInt(5, id);
             if (ps.executeUpdate() > 0) {
                 status = 1;
@@ -242,10 +244,10 @@ public class UserDao {
             conn = dbConnection.getDatabaseConnection();
             String sql = " INSERT INTO MST_USER (fullname, email, password, createDate) VALUES (?,?,?,?) ";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, fullName);
-            ps.setString(2, email);
+            ps.setString(1, cp.encrypt(fullName));
+            ps.setString(2, cp.encrypt(email));
             ps.setString(3, pass);
-            ps.setString(4, createDate);
+            ps.setString(4, cp.encrypt(createDate));
             if (ps.executeUpdate() > 0) {
                 status = 1;
                 System.out.println("Sukses insert data user login");
@@ -283,9 +285,9 @@ public class UserDao {
             while (rs.next()) {
                 UserEntity entity = new UserEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setFullName(rs.getString("fullName"));
-                entity.setEmail(rs.getString("email"));
-                entity.setCreateDate(rs.getString("createDate"));
+                entity.setFullName(cp.decrypt(rs.getString("fullName")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
+                entity.setCreateDate(cp.decrypt(rs.getString("createDate")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {

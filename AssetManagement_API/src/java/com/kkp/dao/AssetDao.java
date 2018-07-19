@@ -5,6 +5,7 @@
  */
 package com.kkp.dao;
 
+import com.kkp.encryption.CaesarCipher;
 import com.kkp.entity.AssetEntity;
 import com.kkp.entity.AssetKaryawanEntity;
 import com.kkp.shared.DbConnection;
@@ -23,6 +24,9 @@ import java.util.List;
  * @author bimagalihr
  */
 public class AssetDao {
+    
+    CaesarCipher cp = new CaesarCipher();
+    
     public int getTotalListTable(String namaLengkap, String idKaryawan, String nomorHp, String email, String namaBarang, String merek, String tipe, String noSeri, String jumlah, String createDate, String tglKadaluarsa) {
         DbConnection dbConnection = new DbConnection();
         Connection conn = null;
@@ -35,51 +39,51 @@ public class AssetDao {
 
             if (!util.isNullOrEmpty(namaLengkap)) {
                 namaLengkap = namaLengkap.trim();
-                FilterData = FilterData + " AND namaLengkap LIKE '%" + namaLengkap + "%'";
+                FilterData = FilterData + " AND namaLengkap LIKE '%" + cp.encrypt(namaLengkap) + "%'";
             }
             if (!util.isNullOrEmpty(idKaryawan)) {
                 idKaryawan = idKaryawan.trim();
-                FilterData = FilterData + " AND idKaryawan LIKE '%" + idKaryawan + "%'";
+                FilterData = FilterData + " AND idKaryawan LIKE '%" + cp.encrypt(idKaryawan) + "%'";
             }
             if (!util.isNullOrEmpty(nomorHp)) {
                 nomorHp = nomorHp.trim();
-                FilterData = FilterData + " AND nomorHp LIKE '%" + nomorHp + "%'";
+                FilterData = FilterData + " AND nomorHp LIKE '%" + cp.encrypt(nomorHp) + "%'";
             }
             if (!util.isNullOrEmpty(email)) {
                 email = email.trim();
-                FilterData = FilterData + " AND email LIKE '%" + email + "%'";
+                FilterData = FilterData + " AND email LIKE '%" + cp.encrypt(email) + "%'";
             }
             if (!util.isNullOrEmpty(namaBarang)) {
                 namaBarang = namaBarang.trim();
-                FilterData = FilterData + " AND namaBarang LIKE '%" + namaBarang + "%'";
+                FilterData = FilterData + " AND namaBarang LIKE '%" + cp.encrypt(namaBarang) + "%'";
             }
             if (!util.isNullOrEmpty(merek)) {
                 merek = merek.trim();
-                FilterData = FilterData + " AND merek LIKE '%" + merek + "%'";
+                FilterData = FilterData + " AND merek LIKE '%" + cp.encrypt(merek) + "%'";
             }
             if (!util.isNullOrEmpty(tipe)) {
                 tipe = tipe.trim();
-                FilterData = FilterData + " AND tipe LIKE '%" + tipe + "%'";
+                FilterData = FilterData + " AND tipe LIKE '%" + cp.encrypt(tipe) + "%'";
             }
             if (!util.isNullOrEmpty(noSeri)) {
                 noSeri = noSeri.trim();
-                FilterData = FilterData + " AND noSeri LIKE '%" + noSeri + "%'";
+                FilterData = FilterData + " AND noSeri LIKE '%" + cp.encrypt(noSeri) + "%'";
             }
             if (!util.isNullOrEmpty(jumlah)) {
                 jumlah = jumlah.trim();
-                FilterData = FilterData + " AND jumlah LIKE '%" + jumlah + "%'";
+                FilterData = FilterData + " AND jumlah LIKE '%" + cp.encrypt(jumlah) + "%'";
             }
             if (!util.isNullOrEmpty(createDate)) {
                 createDate = createDate.trim();
-                FilterData = FilterData + " AND createDate LIKE '%" + createDate + "%'";
+                FilterData = FilterData + " AND createDate LIKE '%" + cp.encrypt(createDate) + "%'";
             }
             if (!util.isNullOrEmpty(tglKadaluarsa)) {
                 tglKadaluarsa = tglKadaluarsa.trim();
-                FilterData = FilterData + " AND tglKadaluarsa LIKE '%" + tglKadaluarsa + "%'";
+                FilterData = FilterData + " AND tglKadaluarsa LIKE '%" + cp.encrypt(tglKadaluarsa) + "%'";
             }
 
             String sql = " SELECT COUNT(0) AS Total FROM (SELECT ROW_NUMBER() OVER(ORDER by ma.id)as rowNum, mk.namaLengkap, mk.idKaryawan, mk.nomorHp, mk.email, ma.namaBarang, ma.merek, ma.tipe, ma.noSeri, ma.jumlah, ma.createDate, ma.tglKadaluarsa FROM MST_ASSET ma LEFT JOIN MST_KARYAWAN mk ON ma.id_tbl_karyawan = mk.id WHERE 1 = 1" + FilterData + " ) as Data";
-            System.out.println(sql);
+//            System.out.println(sql);
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -109,6 +113,7 @@ public class AssetDao {
         List listMaster = new ArrayList<Object>();
         Util util = new Util();
         try {
+            
             conn = dbConnection.getDatabaseConnection();
             Boolean next = false;
 
@@ -125,50 +130,50 @@ public class AssetDao {
             }
             if (!util.isNullOrEmpty(namaLengkap)) {
                 namaLengkap = namaLengkap.trim();
-                FilterData = FilterData + " AND namaLengkap  LIKE '%" + namaLengkap + "%'";
+                FilterData = FilterData + " AND namaLengkap  LIKE '%" + cp.encrypt(namaLengkap) + "%'";
             }
             if (!util.isNullOrEmpty(idKaryawan)) {
                 idKaryawan = idKaryawan.trim();
-                FilterData = FilterData + " AND idKaryawan  LIKE '%" + idKaryawan + "%'";
+                FilterData = FilterData + " AND idKaryawan  LIKE '%" + cp.encrypt(idKaryawan) + "%'";
             }
             if (!util.isNullOrEmpty(nomorHp)) {
                 nomorHp = nomorHp.trim();
-                FilterData = FilterData + " AND nomorHp LIKE '%" + nomorHp + "%'";
+                FilterData = FilterData + " AND nomorHp LIKE '%" + cp.encrypt(nomorHp) + "%'";
             }
             if (!util.isNullOrEmpty(email)) {
                 email = email.trim();
-                FilterData = FilterData + " AND email LIKE '%" + email + "%'";
+                FilterData = FilterData + " AND email LIKE '%" + cp.encrypt(email) + "%'";
             }
             if (!util.isNullOrEmpty(namaBarang)) {
                 namaBarang = namaBarang.trim();
-                FilterData = FilterData + " AND namaBarang LIKE '%" + namaBarang + "%'";
+                FilterData = FilterData + " AND namaBarang LIKE '%" + cp.encrypt(namaBarang) + "%'";
             }
             if (!util.isNullOrEmpty(merek)) {
                 merek = merek.trim();
-                FilterData = FilterData + " AND merek LIKE '%" + merek + "%'";
+                FilterData = FilterData + " AND merek LIKE '%" + cp.encrypt(merek) + "%'";
             }
             if (!util.isNullOrEmpty(tipe)) {
                 tipe = tipe.trim();
-                FilterData = FilterData + " AND tipe LIKE '%" + tipe + "%'";
+                FilterData = FilterData + " AND tipe LIKE '%" + cp.encrypt(tipe) + "%'";
             }
             if (!util.isNullOrEmpty(noSeri)) {
                 noSeri = noSeri.trim();
-                FilterData = FilterData + " AND noSeri LIKE '%" + noSeri + "%'";
+                FilterData = FilterData + " AND noSeri LIKE '%" + cp.encrypt(noSeri) + "%'";
             }
             if (!util.isNullOrEmpty(jumlah)) {
                 jumlah = jumlah.trim();
-                FilterData = FilterData + " AND jumlah LIKE '%" + jumlah + "%'";
+                FilterData = FilterData + " AND jumlah LIKE '%" + cp.encrypt(jumlah) + "%'";
             }
             if (!util.isNullOrEmpty(createDate)) {
                 createDate = createDate.trim();
-                FilterData = FilterData + " AND createDate LIKE '%" + createDate + "%'";
+                FilterData = FilterData + " AND createDate LIKE '%" + cp.encrypt(createDate) + "%'";
             }
             if (!util.isNullOrEmpty(tglKadaluarsa)) {
                 tglKadaluarsa = tglKadaluarsa.trim();
-                FilterData = FilterData + " AND tglKadaluarsa LIKE '%" + tglKadaluarsa + "%'";
+                FilterData = FilterData + " AND tglKadaluarsa LIKE '%" + cp.encrypt(tglKadaluarsa) + "%'";
             }
 
-            String sql = " SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER by ma.id)as rowNum, ma.id, mk.namaLengkap, mk.idKaryawan, mk.nomorHp, mk.email, ma.namaBarang, ma.merek, ma.tipe, ma.noSeri, ma.jumlah, ma.createDate, ma.tglKadaluarsa "
+            String sql = " SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER by ma.id)as rowNum, ma.id, ISNULL(mk.namaLengkap, 'Novo3on') AS namaLengkap, ISNULL(mk.idKaryawan, 'Novo3on') AS idKaryawan, ISNULL(mk.nomorHp, 'Novo3on') AS nomorHp, ISNULL(mk.email, 'Novo3on') AS email, ma.namaBarang, ma.merek, ma.tipe, ma.noSeri, ma.jumlah, ma.createDate, ma.tglKadaluarsa "
                     + "FROM MST_ASSET ma LEFT JOIN MST_KARYAWAN mk ON ma.id_tbl_karyawan = mk.id WHERE 1 = 1" + FilterData + ") as Data WHERE 1 = 1 AND rowNum > " + upLimit + " AND rowNum <= " + downLimit + " ORDER by createDate DESC";
             System.out.println(sql);
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -176,17 +181,17 @@ public class AssetDao {
             while (rs.next()) {
                 AssetKaryawanEntity entity = new AssetKaryawanEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setNamaLengkap(rs.getString("namaLengkap"));
-                entity.setIdKaryawan(rs.getString("idKaryawan"));
-                entity.setNomorHp(rs.getString("nomorHp"));
-                entity.setEmail(rs.getString("email"));
-                entity.setNamaBarang(rs.getString("namaBarang"));
-                entity.setMerek(rs.getString("merek"));
-                entity.setTipe(rs.getString("tipe"));
-                entity.setNoSeri(rs.getString("noSeri"));
-                entity.setJumlah(rs.getString("jumlah"));
-                entity.setCreateDate(rs.getString("createDate"));
-                entity.setTglKadaluarsa(rs.getString("tglKadaluarsa"));
+                entity.setNamaLengkap(cp.decrypt(rs.getString("namaLengkap")));
+                entity.setIdKaryawan(cp.decrypt(rs.getString("idKaryawan")));
+                entity.setNomorHp(cp.decrypt(rs.getString("nomorHp")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
+                entity.setNamaBarang(cp.decrypt(rs.getString("namaBarang")));
+                entity.setMerek(cp.decrypt(rs.getString("merek")));
+                entity.setTipe(cp.decrypt(rs.getString("tipe")));
+                entity.setNoSeri(cp.decrypt(rs.getString("noSeri")));
+                entity.setJumlah(cp.decrypt(rs.getString("jumlah")));
+                entity.setCreateDate(cp.decrypt(rs.getString("createDate")));
+                entity.setTglKadaluarsa(cp.decrypt(rs.getString("tglKadaluarsa")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {
@@ -220,13 +225,13 @@ public class AssetDao {
             String sql = " INSERT INTO MST_ASSET (id_tbl_karyawan, namaBarang, merek, tipe, noSeri, jumlah, tglKadaluarsa, createDate) VALUES (?,?,?,?,?,?,?,?) ";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, pilihKaryawan);
-            ps.setString(2, namaBarang);
-            ps.setString(3, merek);
-            ps.setString(4, tipe);
-            ps.setString(5, noSeri);
-            ps.setString(6, jumlah);
-            ps.setString(7, reformatTglKadaluarsa);
-            ps.setString(8, createDate);
+            ps.setString(2, cp.encrypt(namaBarang));
+            ps.setString(3, cp.encrypt(merek));
+            ps.setString(4, cp.encrypt(tipe));
+            ps.setString(5, cp.encrypt(noSeri));
+            ps.setString(6, cp.encrypt(jumlah));
+            ps.setString(7, cp.encrypt(reformatTglKadaluarsa));
+            ps.setString(8, cp.encrypt(createDate));
             if (ps.executeUpdate() > 0) {
                 status = 1;
                 System.out.println("Sukses insert data barang");
@@ -298,12 +303,12 @@ public class AssetDao {
                 AssetEntity entity = new AssetEntity();
                 entity.setId(rs.getInt("id"));
                 entity.setId_tbl_karyawan(rs.getString("id_tbl_karyawan"));
-                entity.setNamaBarang(rs.getString("namaBarang"));
-                entity.setMerek(rs.getString("merek"));
-                entity.setTipe(rs.getString("tipe"));
-                entity.setNoSeri(rs.getString("noSeri"));
-                entity.setJumlah(rs.getString("jumlah"));
-                entity.setTglKadaluarsa(rs.getString("tglKadaluarsa"));
+                entity.setNamaBarang(cp.decrypt(rs.getString("namaBarang")));
+                entity.setMerek(cp.decrypt(rs.getString("merek")));
+                entity.setTipe(cp.decrypt(rs.getString("tipe")));
+                entity.setNoSeri(cp.decrypt(rs.getString("noSeri")));
+                entity.setJumlah(cp.decrypt(rs.getString("jumlah")));
+                entity.setTglKadaluarsa(cp.decrypt(rs.getString("tglKadaluarsa")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {
@@ -337,13 +342,13 @@ public class AssetDao {
             String sql = " UPDATE MST_ASSET SET id_tbl_karyawan = ?, namaBarang = ?, merek = ?, tipe = ?, noSeri = ?, jumlah = ?, tglKadaluarsa = ?, createDate = ? WHERE id = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, pilihKaryawan);
-            ps.setString(2, namaBarang);
-            ps.setString(3, merek);
-            ps.setString(4, tipe);
-            ps.setString(5, noSeri);
-            ps.setString(6, jumlah);
-            ps.setString(7, reformatTglKadaluarsa);
-            ps.setString(8, createDate);
+            ps.setString(2, cp.encrypt(namaBarang));
+            ps.setString(3, cp.encrypt(merek));
+            ps.setString(4, cp.encrypt(tipe));
+            ps.setString(5, cp.encrypt(noSeri));
+            ps.setString(6, cp.encrypt(jumlah));
+            ps.setString(7, cp.encrypt(reformatTglKadaluarsa));
+            ps.setString(8, cp.encrypt(createDate));
             ps.setString(9, id);
             if (ps.executeUpdate() > 0) {
                 status = 1;
@@ -376,23 +381,24 @@ public class AssetDao {
         List listMaster = new ArrayList<Object>();
         try {
             conn = dbConnection.getDatabaseConnection();
-            String sql = " SELECT ma.id, ma.id_tbl_karyawan, namaLengkap, mk.idKaryawan, mk.nomorHp, mk.email, ma.namaBarang, ma.merek, ma.tipe, ma.noSeri, ma.jumlah, ma.createDate, ma.tglKadaluarsa FROM MST_ASSET ma LEFT JOIN MST_KARYAWAN mk ON ma.id_tbl_karyawan = mk.id WHERE ma.id = "+id;
+            String sql = " SELECT ma.id, ma.id_tbl_karyawan, ISNULL(mk.namaLengkap, 'Novo3on') AS namaLengkap, ISNULL(mk.idKaryawan, 'Novo3on') AS idKaryawan, ISNULL(mk.nomorHp, 'Novo3on') AS nomorHp, ISNULL(mk.email, 'Novo3on') AS email, ma.namaBarang, ma.merek, ma.tipe, ma.noSeri, ma.jumlah, ma.createDate, ma.tglKadaluarsa FROM MST_ASSET ma LEFT JOIN MST_KARYAWAN mk ON ma.id_tbl_karyawan = mk.id WHERE ma.id = "+id;
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 AssetKaryawanEntity entity = new AssetKaryawanEntity();
                 entity.setId(rs.getInt("id"));
                 entity.setId_tbl_karyawan(rs.getString("id_tbl_karyawan"));
-                entity.setIdKaryawan(rs.getString("idKaryawan"));
-                entity.setNomorHp(rs.getString("nomorHp"));
-                entity.setEmail(rs.getString("email"));
-                entity.setNamaBarang(rs.getString("namaBarang"));
-                entity.setMerek(rs.getString("merek"));
-                entity.setTipe(rs.getString("tipe"));
-                entity.setNoSeri(rs.getString("noSeri"));
-                entity.setJumlah(rs.getString("jumlah"));
-                entity.setCreateDate(rs.getString("createDate"));
-                entity.setTglKadaluarsa(rs.getString("tglKadaluarsa"));
+                entity.setNamaLengkap(cp.decrypt(rs.getString("namaLengkap")));
+                entity.setIdKaryawan(cp.decrypt(rs.getString("idKaryawan")));
+                entity.setNomorHp(cp.decrypt(rs.getString("nomorHp")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
+                entity.setNamaBarang(cp.decrypt(rs.getString("namaBarang")));
+                entity.setMerek(cp.decrypt(rs.getString("merek")));
+                entity.setTipe(cp.decrypt(rs.getString("tipe")));
+                entity.setNoSeri(cp.decrypt(rs.getString("noSeri")));
+                entity.setJumlah(cp.decrypt(rs.getString("jumlah")));
+                entity.setCreateDate(cp.decrypt(rs.getString("createDate")));
+                entity.setTglKadaluarsa(cp.decrypt(rs.getString("tglKadaluarsa")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {

@@ -5,6 +5,7 @@
  */
 package com.kkp.dao;
 
+import com.kkp.encryption.CaesarCipher;
 import com.kkp.entity.KaryawanEntity;
 import com.kkp.shared.DbConnection;
 import com.kkp.shared.Util;
@@ -21,6 +22,9 @@ import java.util.List;
  * @author bimagalihr
  */
 public class KaryawanDao {
+    
+    CaesarCipher cp = new CaesarCipher();
+    
     public int addKaryawan(String namaLengkap, String nomorHp, String email, String idKaryawan, String nomorKtp, String alamatKtp, String createDate) throws Exception {
         DbConnection dbConnection = new DbConnection();
         Connection conn = null;
@@ -29,13 +33,13 @@ public class KaryawanDao {
             conn = dbConnection.getDatabaseConnection();
             String sql = " INSERT INTO MST_KARYAWAN (namaLengkap, nomorHp, email, idKaryawan, nomorKtp, alamatKtp, createDate) VALUES (?,?,?,?,?,?,?) ";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, namaLengkap);
-            ps.setString(2, nomorHp);
-            ps.setString(3, email);
-            ps.setString(4, idKaryawan);
-            ps.setString(5, nomorKtp);
-            ps.setString(6, alamatKtp);
-            ps.setString(7, createDate);
+            ps.setString(1, cp.encrypt(namaLengkap));
+            ps.setString(2, cp.encrypt(nomorHp));
+            ps.setString(3, cp.encrypt(email));
+            ps.setString(4, cp.encrypt(idKaryawan));
+            ps.setString(5, cp.encrypt(nomorKtp));
+            ps.setString(6, cp.encrypt(alamatKtp));
+            ps.setString(7, cp.encrypt(createDate));
             if (ps.executeUpdate() > 0) {
                 status = 1;
                 System.out.println("Sukses insert data user karyawan");
@@ -73,31 +77,31 @@ public class KaryawanDao {
 
             if (!util.isNullOrEmpty(namaLengkap)) {
                 namaLengkap = namaLengkap.trim();
-                FilterData = FilterData + " AND namaLengkap LIKE '%" + namaLengkap + "%'";
+                FilterData = FilterData + " AND namaLengkap LIKE '%" + cp.encrypt(namaLengkap) + "%'";
             }
             if (!util.isNullOrEmpty(nomorHp)) {
                 nomorHp = nomorHp.trim();
-                FilterData = FilterData + " AND nomorHp LIKE '%" + nomorHp + "%'";
+                FilterData = FilterData + " AND nomorHp LIKE '%" + cp.encrypt(nomorHp) + "%'";
             }
             if (!util.isNullOrEmpty(email)) {
                 email = email.trim();
-                FilterData = FilterData + " AND email LIKE '%" + email + "%'";
+                FilterData = FilterData + " AND email LIKE '%" + cp.encrypt(email) + "%'";
             }
             if (!util.isNullOrEmpty(idKaryawan)) {
                 idKaryawan = idKaryawan.trim();
-                FilterData = FilterData + " AND idKaryawan LIKE '%" + idKaryawan + "%'";
+                FilterData = FilterData + " AND idKaryawan LIKE '%" + cp.encrypt(idKaryawan) + "%'";
             }
             if (!util.isNullOrEmpty(nomorKtp)) {
                 nomorKtp = nomorKtp.trim();
-                FilterData = FilterData + " AND nomorKtp LIKE '%" + nomorKtp + "%'";
+                FilterData = FilterData + " AND nomorKtp LIKE '%" + cp.encrypt(nomorKtp) + "%'";
             }
             if (!util.isNullOrEmpty(alamatKtp)) {
                 alamatKtp = alamatKtp.trim();
-                FilterData = FilterData + " AND alamatKtp LIKE '%" + alamatKtp + "%'";
+                FilterData = FilterData + " AND alamatKtp LIKE '%" + cp.encrypt(alamatKtp) + "%'";
             }
             if (!util.isNullOrEmpty(createDate)) {
                 createDate = createDate.trim();
-                FilterData = FilterData + " AND createDate LIKE '%" + createDate + "%'";
+                FilterData = FilterData + " AND createDate LIKE '%" + cp.encrypt(createDate) + "%'";
             }
 
             String sql = " SELECT COUNT(0) AS Total FROM (SELECT ROW_NUMBER() OVER(ORDER by id)as rowNum, namaLengkap, nomorHp, email, idKaryawan, nomorKtp, alamatKtp, createDate FROM MST_KARYAWAN WHERE 1 = 1" + FilterData + " ) as Data";
@@ -145,31 +149,31 @@ public class KaryawanDao {
             }
             if (!util.isNullOrEmpty(namaLengkap)) {
                 namaLengkap = namaLengkap.trim();
-                FilterData = FilterData + " AND namaLengkap  LIKE '%" + namaLengkap + "%'";
+                FilterData = FilterData + " AND namaLengkap  LIKE '%" + cp.encrypt(namaLengkap) + "%'";
             }
             if (!util.isNullOrEmpty(nomorHp)) {
                 nomorHp = nomorHp.trim();
-                FilterData = FilterData + " AND nomorHp LIKE '%" + nomorHp + "%'";
+                FilterData = FilterData + " AND nomorHp LIKE '%" + cp.encrypt(nomorHp) + "%'";
             }
             if (!util.isNullOrEmpty(email)) {
                 email = email.trim();
-                FilterData = FilterData + " AND email LIKE '%" + email + "%'";
+                FilterData = FilterData + " AND email LIKE '%" + cp.encrypt(email) + "%'";
             }
             if (!util.isNullOrEmpty(idKaryawan)) {
                 idKaryawan = idKaryawan.trim();
-                FilterData = FilterData + " AND idKaryawan LIKE '%" + idKaryawan + "%'";
+                FilterData = FilterData + " AND idKaryawan LIKE '%" + cp.encrypt(idKaryawan) + "%'";
             }
             if (!util.isNullOrEmpty(nomorKtp)) {
                 nomorKtp = nomorKtp.trim();
-                FilterData = FilterData + " AND nomorKtp LIKE '%" + nomorKtp + "%'";
+                FilterData = FilterData + " AND nomorKtp LIKE '%" + cp.encrypt(nomorKtp) + "%'";
             }
             if (!util.isNullOrEmpty(alamatKtp)) {
                 alamatKtp = alamatKtp.trim();
-                FilterData = FilterData + " AND alamatKtp LIKE '%" + alamatKtp + "%'";
+                FilterData = FilterData + " AND alamatKtp LIKE '%" + cp.encrypt(alamatKtp) + "%'";
             }
             if (!util.isNullOrEmpty(createDate)) {
                 createDate = createDate.trim();
-                FilterData = FilterData + " AND createDate LIKE '%" + createDate + "%'";
+                FilterData = FilterData + " AND createDate LIKE '%" + cp.encrypt(createDate) + "%'";
             }
 
             String sql = " SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER by id)as rowNum, id, namaLengkap, nomorHp, email, idKaryawan, nomorKtp, alamatKtp, createDate "
@@ -180,13 +184,13 @@ public class KaryawanDao {
             while (rs.next()) {
                 KaryawanEntity entity = new KaryawanEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setNamaLengkap(rs.getString("namaLengkap"));
-                entity.setNomorHp(rs.getString("nomorHp"));
-                entity.setEmail(rs.getString("email"));
-                entity.setIdKaryawan(rs.getString("idKaryawan"));
-                entity.setNomorKtp(rs.getString("nomorKtp"));
-                entity.setAlamatKtp(rs.getString("alamatKtp"));
-                entity.setCreateDate(rs.getString("createDate"));
+                entity.setNamaLengkap(cp.decrypt(rs.getString("namaLengkap")));
+                entity.setNomorHp(cp.decrypt(rs.getString("nomorHp")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
+                entity.setIdKaryawan(cp.decrypt(rs.getString("idKaryawan")));
+                entity.setNomorKtp(cp.decrypt(rs.getString("nomorKtp")));
+                entity.setAlamatKtp(cp.decrypt(rs.getString("alamatKtp")));
+                entity.setCreateDate(cp.decrypt(rs.getString("createDate")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {
@@ -251,13 +255,13 @@ public class KaryawanDao {
             while (rs.next()) {
                 KaryawanEntity entity = new KaryawanEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setNamaLengkap(rs.getString("namaLengkap"));
-                entity.setNomorHp(rs.getString("nomorHp"));
-                entity.setEmail(rs.getString("email"));
-                entity.setIdKaryawan(rs.getString("idKaryawan"));
-                entity.setNomorKtp(rs.getString("nomorKtp"));
-                entity.setAlamatKtp(rs.getString("alamatKtp"));
-                entity.setCreateDate(rs.getString("createDate"));
+                entity.setNamaLengkap(cp.decrypt(rs.getString("namaLengkap")));
+                entity.setNomorHp(cp.decrypt(rs.getString("nomorHp")));
+                entity.setEmail(cp.decrypt(rs.getString("email")));
+                entity.setIdKaryawan(cp.decrypt(rs.getString("idKaryawan")));
+                entity.setNomorKtp(cp.decrypt(rs.getString("nomorKtp")));
+                entity.setAlamatKtp(cp.decrypt(rs.getString("alamatKtp")));
+                entity.setCreateDate(cp.decrypt(rs.getString("createDate")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {
@@ -288,13 +292,13 @@ public class KaryawanDao {
             conn = dbConnection.getDatabaseConnection();
             String sql = " UPDATE MST_KARYAWAN SET namaLengkap = ?, nomorHp = ?, email = ?, idKaryawan = ?, nomorKtp = ?, alamatKtp = ?, createDate = ? WHERE id = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, namaLengkap);
-            ps.setString(2, nomorHp);
-            ps.setString(3, email);
-            ps.setString(4, idKaryawan);
-            ps.setString(5, nomorKtp);
-            ps.setString(6, alamatKtp);
-            ps.setString(7, createDate);
+            ps.setString(1, cp.encrypt(namaLengkap));
+            ps.setString(2, cp.encrypt(nomorHp));
+            ps.setString(3, cp.encrypt(email));
+            ps.setString(4, cp.encrypt(idKaryawan));
+            ps.setString(5, cp.encrypt(nomorKtp));
+            ps.setString(6, cp.encrypt(alamatKtp));
+            ps.setString(7, cp.encrypt(createDate));
             ps.setString(8, id);
             if (ps.executeUpdate() > 0) {
                 status = 1;
@@ -333,7 +337,7 @@ public class KaryawanDao {
             while (rs.next()) {
                 KaryawanEntity entity = new KaryawanEntity();
                 entity.setId(rs.getInt("id"));
-                entity.setNamaLengkap(rs.getString("namaLengkap"));
+                entity.setNamaLengkap(cp.decrypt(rs.getString("namaLengkap")));
                 listMaster.add(entity);
             }
         } catch (Exception e) {

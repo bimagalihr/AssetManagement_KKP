@@ -3,11 +3,7 @@
     <servlet>
         <servlet-name>MobileWS</servlet-name>
         <servlet-class>com.kkp.controller.MobileWS</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoginController</servlet-name>
-        <servlet-class>com.axa.controller.LoginController</servlet-class>
-    </servlet>
+    </servlet>    
     <servlet>
         <servlet-name>AdminMenuAction</servlet-name>
         <servlet-class>com.kkp.controller.AdminMenuAction</servlet-class>
@@ -28,10 +24,6 @@
         <servlet-name>WebService</servlet-name>
         <servlet-class>com.kkp.controller.WebService</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginController</servlet-name>
-        <url-pattern>/LoginController</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminMenuAction</servlet-name>
         <url-pattern>/cms/AdminMenuAction</url-pattern>
