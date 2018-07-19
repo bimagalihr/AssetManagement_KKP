@@ -29,16 +29,6 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:200px;" colspan="">
-                                                        <b>ID</b>
-                                                    </td>
-                                                    <td style="padding-bottom:10px;padding-left:10px;width:400px;" colspan="">
-                                                        <input style="width:70px;" class="form-control" type="text" style="" id="id" name="id" disabled>
-                                                    </td>
-                                                    <td>&nbsp;</td>
-                                                    <td>&nbsp;</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-bottom:10px;padding-left:10px;width:200px;" colspan="">
                                                         <b>Nama Lengkap</b>
                                                     </td>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:400px;" colspan="">

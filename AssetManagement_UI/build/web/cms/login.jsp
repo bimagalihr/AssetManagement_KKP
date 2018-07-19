@@ -5,7 +5,7 @@
         <div class="center-sign">
             <div class="panel panel-sign">
                 <div class="panel-body">
-                    <div class="axa-logo-dashboard"></div>
+                    <div class="am-logo-dashboard"></div>
                     <div class="header-title">
                         <h2>Asset Management</h2>
                     </div>
@@ -14,7 +14,7 @@
                         <div class="form-group mb-lg">
                             <label>Email</label>
                             <div class="input-group input-group-icon">
-                                <input name="username" type="text" id="username" class="form-control input-lg" value="admin@ekreasi.com"/>
+                                <input name="username" type="text" id="username" class="form-control input-lg" value=""/>
                                 <span class="input-group-addon">
                                     <span class="icon icon-lg">
                                         <i class="fa fa-envelope"></i>
@@ -28,7 +28,7 @@
                                 <label class="pull-left">Password</label>
                             </div>
                             <div class="input-group input-group-icon">
-                                <input name="pwd" type="password" id="pwd" class="form-control input-lg" value="admin123"/>
+                                <input name="pwd" type="password" id="pwd" class="form-control input-lg" value=""/>
                                 <span class="input-group-addon">
                                     <span class="icon icon-lg">
                                         <i class="fa fa-lock"></i>
@@ -89,33 +89,7 @@
     <script src="assets/javascripts/conf.js"></script>
     <script src="assets/javascripts/function.js"></script>
     
-    <script type="text/javascript">
-//    function(form) {
-//       jQuery.ajax({
-//        url: "http://localhost:8080/AssetManagement_API/WebService?doing=login&emailLogin=admin@ekreasi.com&passwordLogin=admin123",
-//        type: "POST",
-//        dataType: "json",
-//        contentType: "application/json; charset=utf-8",
-//        success: function (response) {
-//            var obj = response;
-//            var message = obj.message;
-//            var description = obj.description;
-//            var idDesc = obj.id;
-//            if (obj.status == 1) {
-//                console.log("sucess coii");
-//            } else {
-//                $("#ModalMessageTitle").html("<font color='red'>" + message + "</font>");
-//                $("#ModalMessageContent").html("<p>  " + description + "   </p>");
-//                $("#ModalMessage").modal('show');
-//            }
-//        },
-//        error: function (response) {
-//            console.log("failed");
-//        }
-//        
-//    });   
-//    }
-            
+    <script type="text/javascript"> 
         $(function() {
             $("#login-form").submit(function() {
                 return false;

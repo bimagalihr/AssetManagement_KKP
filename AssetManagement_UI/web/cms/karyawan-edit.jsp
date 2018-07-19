@@ -5,13 +5,13 @@
         <!-- end: sidebar -->
         <section role="main" class="content-body">
             <header class="page-header">
-                <h2>Karyawan > Tambah Karyawan</h2>
+                <h2>Karyawan > Edit Karyawan</h2>
             </header>
             <!-- start: page    -->
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions"></div>
-                    <h2 class="panel-title">Tambah User Login</h2>
+                    <h2 class="panel-title">Edit Data Karyawan</h2>
                 </header>
                 <div role="content">
                     <div class="row" >

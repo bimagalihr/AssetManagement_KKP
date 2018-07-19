@@ -2,7 +2,7 @@
 <header class="header">
     <div class="logo-container">
         <div  class="logo">
-            <img src="assets/img/logo.png" height="35" />
+            <img src="assets/img/logo_AssetManagement.png" height="35" />
         </div>
         <div class="title-dashboard"><h2>AssetManagement</h2></div>
         <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">

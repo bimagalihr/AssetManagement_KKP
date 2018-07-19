@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/src/java/com/kkp/mapping/Asset.java</file>
-            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/asset-list.jsp</file>
-            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/common/menu.jsp</file>
+            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/karyawan-edit.jsp</file>
+            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/karyawan-view.jsp</file>
+            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/login.jsp</file>
+            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/asset-view.jsp</file>
+            <file>file:/C:/Data/00Project/KKP/AssetManagement_UI/web/cms/user-view.jsp</file>
         </group>
     </open-files>
 </project-private>

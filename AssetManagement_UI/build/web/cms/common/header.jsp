@@ -14,7 +14,7 @@
 
         <!-- Basic -->
         <meta charset="UTF-8">
-        <link href="assets/img/logo.png" rel="shortcut icon">
+        <link href="assets/img/logo_AssetManagement.png" rel="shortcut icon">
         <title>Asset Management</title>
         <!-- Mobile Meta -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />

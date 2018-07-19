@@ -9,10 +9,6 @@
         <servlet-class>com.kkp.mapping.Login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoginController</servlet-name>
-        <servlet-class>com.axa.controller.LoginController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AdminMenuAction</servlet-name>
         <servlet-class>com.kkp.controller.AdminMenuAction</servlet-class>
     </servlet>
@@ -47,10 +43,6 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/cms/Login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginController</servlet-name>
-        <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminMenuAction</servlet-name>

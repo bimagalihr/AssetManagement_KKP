@@ -83,11 +83,11 @@ form button.btn-primary{
 	text-align:center;
 }
 
-.axa-logo-dashboard {
+.am-logo-dashboard {
   margin:0px auto 5px auto;
   width:120px;
   height:120px;
-  background:url(../../assets/img/logo.png)no-repeat;
+  background:url(../../assets/img/logo_AssetManagement.png)no-repeat;
 }
 .title-dashboard {
   float:left;

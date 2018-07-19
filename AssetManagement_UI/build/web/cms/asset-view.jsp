@@ -29,16 +29,6 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:200px;" colspan="">
-                                                        <b>ID</b>
-                                                    </td>
-                                                    <td style="padding-bottom:10px;padding-left:10px;width:400px;" colspan="">
-                                                        <input class="form-control" type="text" style="width: 70px;" id="id" name="id" disabled>
-                                                    </td>
-                                                    <td>&nbsp;</td>
-                                                    <td>&nbsp;</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-bottom:10px;padding-left:10px;width:200px;" colspan="">
                                                         <b>Tanggal Buat</b>
                                                     </td>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:400px;" colspan="">
@@ -49,12 +39,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:200px;" colspan="">
-                                                        <b>Pilih Karyawan</b>
+                                                        <b>Nama Karyawan</b>
                                                     </td>
                                                     <td style="padding-bottom:10px;padding-left:10px;width:400px;" colspan="">
-                                                        <select class="form-control" id="pilihKaryawan" name="pilihKaryawan" disabled>
-                                                            <option value="">Pilih Nama Karyawan</option>                                                        
-                                                        </select>
+                                                        <input class="form-control" type="text" style="" id="namaLengkap" name="namaLengkap" disabled>
                                                     </td>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
@@ -185,44 +173,7 @@
         $(function() {
             $('#tglKadaluarsa').datepicker();
         });
-        
-        function GetDataKaryawan(){
-            attachFields =  {
-                "doing" : "list-all-data-karyawan"
-            }
-            AJAXGET(
-                function doSubmit(data) {
-                    try {
-                        var obj = jQuery.parseJSON(data);
-                        var i;
-                        switch(obj.status) {
-                            case 1:
-                                for(i = 0; i < obj.data.length; i++){                                
-                                    var option      = document.createElement("option");
-                                    var select      = document.getElementById("pilihKaryawan"); 
-                                    option.text     = obj.data[i].namaLengkap;
-                                    option.value    = obj.data[i].id;        
-                                    select.appendChild(option);
-                                }     
-                                break;                            
-                            default:
-                                $("#ModalMessageConfirm").modal('hide');
-                                $("#ModalMessageTitle").html(kvlAppVer);
-                                $("#ModalMessageContent").html("<p>Tidak ada data atau terjadi kesalahan </p>");
-                                $("#ModalMessage").modal('show');
-                        }
-                    }catch(e){
-                        $("#ModalMessageConfirm").modal('hide');
-                        $("#ModalMessageTitle").html(kvlAppVer);
-                        $("#ModalMessageContent").html("<p> Error ! : " + e + " </p>");
-                        $("#ModalMessage").modal('show');
-                    }
-                },
-                    "WebService", attachFields, false, true
-            );
-        }        
-        GetDataKaryawan();
-        
+                
         function getDataAsset(){
             attachFields =  {
                 "doing" : "view-data-asset",
@@ -236,29 +187,33 @@
                             case 1:           
                                 
                                 var dataEmpty       = "Deleted";
-                                var idTblKaryawan   = obj.data[0].id_tbl_karyawan;
+                                var nmLengkap       = obj.data[0].namaLengkap;
                                 var idKrywn         = obj.data[0].idKaryawan;
                                 var noHp            = obj.data[0].nomorHp;
                                 var eml             = obj.data[0].email;
                                 
-                                $("#pilihKaryawan").val(obj.data[0].id_tbl_karyawan);  
+                                if (!!nmLengkap) {
+                                    $("#namaLengkap").val(nmLengkap);                         
+                                }else{
+                                    $("#namaLengkap").val(dataEmpty);
+                                }
                                 
                                 if (!!idKrywn) {
-                                    $("#idKaryawan").val(obj.data[0].idKaryawan);                         
+                                    $("#idKaryawan").val(idKrywn);                         
                                 }else{
-                                    $("#pilihKaryawan").val(dataEmpty);
+                                    $("#idKaryawan").val(dataEmpty);
                                 }
                                 
                                 if (!!noHp) {
-                                    $("#nomorHp").val(obj.data[0].nomorHp);                        
+                                    $("#nomorHp").val(noHp);                        
                                 }else{
-                                    $("#pilihKaryawan").val(dataEmpty);
+                                    $("#nomorHp").val(dataEmpty);
                                 }
                                 
                                 if (!!eml) {
-                                    $("#email").val(obj.data[0].email);                       
+                                    $("#email").val(eml);                       
                                 }else{
-                                    $("#pilihKaryawan").val(dataEmpty);
+                                    $("#email").val(dataEmpty);
                                 }
                                                                 
                                 $("#id").val(obj.data[0].id);                                
